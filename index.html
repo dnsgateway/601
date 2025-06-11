@@ -17,7 +17,7 @@
   </div>
 
   <div class="landing-page">
-    <!-- Left Panel -->
+    <!-- Information Section -->
     <section class="info-panel">
       <div class="logo">A</div>
       <h1>Forex Options AI</h1>
@@ -30,22 +30,24 @@
       <button id="launchDemoBtn">Launch Interactive Demo</button>
     </section>
 
-    <!-- Right Panel (Mockup) -->
+    <!-- Android Phone Mockup -->
     <section class="mockup-panel">
-      <div id="demoApp" class="mockup">
-        <div id="screen" class="screen">
-          <div class="rate">EUR/USD <span id="eurusd">--</span></div>
-          <div class="rate red">USD/JPY <span id="usdjpy">--</span></div>
-          <div class="rate green">GBP/USD <span id="gbpusd">--</span></div>
-          <h3>AI Insight</h3>
-          <div class="insight">📈 Long GBP/USD</div>
-          <div class="insight red">📉 Hedge EUR/USD Volatility</div>
+      <div class="phone-mockup">
+        <div id="demoApp" class="mockup">
+          <div id="screen" class="screen">
+            <div class="rate">EUR/USD <span id="eurusd">--</span></div>
+            <div class="rate red">USD/JPY <span id="usdjpy">--</span></div>
+            <div class="rate green">GBP/USD <span id="gbpusd">--</span></div>
+            <h3>AI Insight</h3>
+            <div class="insight">📈 Long GBP/USD</div>
+            <div class="insight red">📉 Hedge EUR/USD Volatility</div>
+          </div>
+          <nav class="bottom-nav">
+            <button onclick="navigate('rates')">📊</button>
+            <button onclick="navigate('ai')">🤖</button>
+            <button onclick="navigate('settings')">⚙️</button>
+          </nav>
         </div>
-        <nav class="bottom-nav">
-          <button onclick="navigate('rates')">📊</button>
-          <button onclick="navigate('ai')">🤖</button>
-          <button onclick="navigate('settings')">⚙️</button>
-        </nav>
       </div>
     </section>
   </div>
