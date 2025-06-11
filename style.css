@@ -1,0 +1,128 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.landing-page {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .landing-page {
+    flex-direction: row;
+  }
+}
+
+.info-panel {
+  flex: 1;
+  padding: 2rem;
+  text-align: center;
+  background: #0f172a;
+}
+
+.logo {
+  display: inline-block;
+  background: #38bdf8;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  color: #0f172a;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 2rem 0;
+  font-size: 1rem;
+}
+
+.features li {
+  margin-bottom: 0.75rem;
+}
+
+.tagline {
+  color: #94a3b8;
+  margin: 1rem 0;
+}
+
+button#launchDemoBtn {
+  background: #38bdf8;
+  color: #0f172a;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mockup-panel {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.mockup {
+  width: 320px;
+  border-radius: 24px;
+  background: #111827;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.screen {
+  background: #1e293b;
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.rate {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.rate span {
+  float: right;
+}
+
+.red {
+  color: #ef4444;
+}
+
+.green {
+  color: #22c55e;
+}
+
+.insight {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #0f172a;
+  border-radius: 8px;
+}
+
+.bottom-nav {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+
+.bottom-nav button {
+  background: #1e293b;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 10px;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: #38bdf8;
+}
+
+.bottom-nav button:hover {
+  background: #38bdf8;
+  color: #0f172a;
+}
