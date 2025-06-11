@@ -7,7 +7,17 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Onboarding Modal -->
+  <div id="onboarding" class="modal">
+    <div class="modal-content">
+      <h2>Welcome to Forex Options AI</h2>
+      <p>This app helps you trade smarter with real-time insights, macroeconomic events, and AI-powered strategy suggestions.</p>
+      <button onclick="closeModal()">Start Demo</button>
+    </div>
+  </div>
+
   <div class="landing-page">
+    <!-- Left Panel -->
     <section class="info-panel">
       <div class="logo">A</div>
       <h1>Forex Options AI</h1>
@@ -20,20 +30,21 @@
       <button id="launchDemoBtn">Launch Interactive Demo</button>
     </section>
 
+    <!-- Right Panel (Mockup) -->
     <section class="mockup-panel">
       <div id="demoApp" class="mockup">
-        <div class="screen">
-          <div class="rate">EUR/USD <span>1.0843</span></div>
-          <div class="rate red">USD/JPY <span>142.89</span></div>
-          <div class="rate green">GBP/USD <span>1.2711</span></div>
+        <div id="screen" class="screen">
+          <div class="rate">EUR/USD <span id="eurusd">--</span></div>
+          <div class="rate red">USD/JPY <span id="usdjpy">--</span></div>
+          <div class="rate green">GBP/USD <span id="gbpusd">--</span></div>
           <h3>AI Insight</h3>
           <div class="insight">📈 Long GBP/USD</div>
           <div class="insight red">📉 Hedge EUR/USD Volatility</div>
         </div>
         <nav class="bottom-nav">
-          <button onclick="showAlert('Rates')">📊</button>
-          <button onclick="showAlert('AI')">🤖</button>
-          <button onclick="showAlert('Settings')">⚙️</button>
+          <button onclick="navigate('rates')">📊</button>
+          <button onclick="navigate('ai')">🤖</button>
+          <button onclick="navigate('settings')">⚙️</button>
         </nav>
       </div>
     </section>
