@@ -8,7 +8,7 @@
 </head>
 <body>
 
-  <!-- Onboarding Modal (display set via JS) -->
+  <!-- Onboarding Modal -->
   <div id="onboarding" class="modal" style="display: flex;">
     <div class="modal-content">
       <h2>Welcome to Forex Simulator</h2>
@@ -18,7 +18,7 @@
   </div>
 
   <div class="landing-page">
-    <!-- Info Panel -->
+    <!-- Info Section -->
     <section class="info-panel">
       <div class="logo">A</div>
       <h1>Forex Simulator</h1>
@@ -31,12 +31,12 @@
       <button id="launchDemoBtn">Launch Interactive Demo</button>
     </section>
 
-    <!-- iPhone Mockup -->
+    <!-- iPhone Mockup Panel -->
     <section class="mockup-panel">
       <div class="iphone-shell">
         <div class="notch"></div>
-        <div class="screen" id="app">
 
+        <div class="screen" id="app">
           <!-- Side Drawer -->
           <aside id="drawer" class="drawer">
             <div class="profile-block">
@@ -58,14 +58,13 @@
           <!-- Hamburger Button -->
           <button id="menuBtn" class="hamburger"><span></span><span></span><span></span></button>
 
-          <!-- Main App Content -->
+          <!-- Main Content Area -->
           <main class="content">
             <header class="hero">
               <h2>Forex Options<br>AI Dashboard</h2>
               <p class="subtitle">Track key metrics & real-time<br>AI-driven trade strategies</p>
             </header>
 
-            <!-- FX Rates -->
             <section id="rates" class="rates-grid">
               <div class="rate-card">
                 <h3>EUR/USD</h3>
@@ -81,7 +80,6 @@
               </div>
             </section>
 
-            <!-- Macro Table -->
             <section id="macro" class="macro">
               <h4>Macro Events &amp; Metrics</h4>
               <table>
@@ -94,7 +92,6 @@
               </table>
             </section>
 
-            <!-- Placeholder Panels -->
             <section id="ai" class="placeholder"><h4>AI Strategy Assistant</h4></section>
             <section id="custom" class="placeholder"><h4>Custom Interface</h4></section>
           </main>
@@ -110,42 +107,55 @@
     </section>
   </div>
 
-  <!-- Embedded Script -->
+  <!-- Script Logic -->
   <script>
     const qs = s => document.querySelector(s);
     const qsa = s => document.querySelectorAll(s);
 
-    // Onboarding Modal
+    // Show onboarding modal on page load
+    window.addEventListener('load', () => {
+      document.getElementById('onboarding').style.display = 'flex';
+    });
+
+    // Close onboarding modal and launch demo
     document.getElementById('startBtn').addEventListener('click', () => {
       document.getElementById('onboarding').style.display = 'none';
       document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
       fetchRates();
+      openDrawer();
     });
 
-    // Drawer Toggle
-    function toggleDrawer() {
-      qs('#drawer').classList.toggle('show');
-      qs('#overlay').classList.toggle('show');
-    }
-    qs('#menuBtn').addEventListener('click', toggleDrawer);
-    qs('#overlay').addEventListener('click', toggleDrawer);
+    // Launch Demo button outside phone
+    document.getElementById('launchDemoBtn').addEventListener('click', () => {
+      document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
+      fetchRates();
+      openDrawer();
+    });
 
-    // Section Navigation
+    // Hamburger toggle
+    document.getElementById('menuBtn').addEventListener('click', toggleDrawer);
+    document.getElementById('overlay').addEventListener('click', toggleDrawer);
+
+    function toggleDrawer() {
+      document.getElementById('drawer').classList.toggle('show');
+      document.getElementById('overlay').classList.toggle('show');
+    }
+
+    function openDrawer() {
+      document.getElementById('drawer').classList.add('show');
+      document.getElementById('overlay').classList.add('show');
+    }
+
+    // Navigation buttons (drawer & bottom)
     function navigate(e) {
       const id = e.currentTarget.dataset.target;
-      const el = qs(`#${id}`);
+      const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      if (qs('#drawer').classList.contains('show')) toggleDrawer();
+      if (document.getElementById('drawer').classList.contains('show')) toggleDrawer();
     }
     qsa('[data-target]').forEach(btn => btn.addEventListener('click', navigate));
 
-    // Launch Button Outside
-    qs('#launchDemoBtn').addEventListener('click', () => {
-      qs('#app').scrollIntoView({ behavior: 'smooth' });
-      fetchRates();
-    });
-
-    // FX Rate Fetch
+    // Live Forex Rate Fetch
     function fetchRates() {
       fetch('https://api.exchangerate.host/latest?base=USD')
         .then(r => r.json()).then(d => {
