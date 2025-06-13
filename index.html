@@ -8,17 +8,17 @@
 </head>
 <body>
 
-  <!-- ─── Onboarding modal ───────────────────────────────────────────── -->
-  <div id="onboarding" class="modal" hidden>
+  <!-- Onboarding Modal (display set via JS) -->
+  <div id="onboarding" class="modal" style="display: flex;">
     <div class="modal-content">
       <h2>Welcome to Forex Simulator</h2>
-      <p>This app helps you trade smarter with real-time insights, macro-economic events and AI-powered strategy suggestions.</p>
+      <p>This app helps you trade smarter with real-time insights, macroeconomic events and AI-powered strategy suggestions.</p>
       <button id="startBtn">Start Demo</button>
     </div>
   </div>
 
   <div class="landing-page">
-    <!-- Marketing / hero column -------------------------------------- -->
+    <!-- Info Panel -->
     <section class="info-panel">
       <div class="logo">A</div>
       <h1>Forex Simulator</h1>
@@ -31,15 +31,13 @@
       <button id="launchDemoBtn">Launch Interactive Demo</button>
     </section>
 
-    <!-- iPhone-13 mock-up -------------------------------------------- -->
+    <!-- iPhone Mockup -->
     <section class="mockup-panel">
       <div class="iphone-shell">
         <div class="notch"></div>
-
-        <!-- App screen -->
         <div class="screen" id="app">
 
-          <!-- Side-menu (hidden by default) -->
+          <!-- Side Drawer -->
           <aside id="drawer" class="drawer">
             <div class="profile-block">
               <div class="avatar">👤</div>
@@ -48,7 +46,6 @@
                 <p>user@ai.forex</p>
               </div>
             </div>
-
             <nav class="drawer-nav">
               <button data-target="rates"><span class="icon">▮▮</span>Forex Rates</button>
               <button data-target="macro"><span class="icon">↗</span>Macro Events</button>
@@ -58,36 +55,33 @@
           </aside>
           <div id="overlay" class="overlay"></div>
 
-          <!-- Hamburger -->
+          <!-- Hamburger Button -->
           <button id="menuBtn" class="hamburger"><span></span><span></span><span></span></button>
 
-          <!-- Scrollable main content -->
+          <!-- Main App Content -->
           <main class="content">
-
             <header class="hero">
               <h2>Forex Options<br>AI Dashboard</h2>
-              <p class="subtitle">Track key metrics &amp; real-time<br>AI-driven trade strategies</p>
+              <p class="subtitle">Track key metrics & real-time<br>AI-driven trade strategies</p>
             </header>
 
-            <!-- Rate Cards -->
+            <!-- FX Rates -->
             <section id="rates" class="rates-grid">
               <div class="rate-card">
                 <h3>EUR/USD</h3>
                 <p class="rate-line">Rate: <span id="eurusdVal">--</span></p>
               </div>
-
               <div class="rate-card">
                 <h3>USD/JPY</h3>
                 <p class="rate-line red">Rate: <span id="usdjpyVal">--</span></p>
               </div>
-
               <div class="rate-card wide">
                 <h3>GBP/USD</h3>
                 <p class="rate-line green">Rate: <span id="gbpusdVal">--</span></p>
               </div>
             </section>
 
-            <!-- Macro table -->
+            <!-- Macro Table -->
             <section id="macro" class="macro">
               <h4>Macro Events &amp; Metrics</h4>
               <table>
@@ -100,13 +94,12 @@
               </table>
             </section>
 
-            <!-- Placeholder panels (navigation targets) -->
+            <!-- Placeholder Panels -->
             <section id="ai" class="placeholder"><h4>AI Strategy Assistant</h4></section>
             <section id="custom" class="placeholder"><h4>Custom Interface</h4></section>
-
           </main>
 
-          <!-- Bottom nav -->
+          <!-- Bottom Navigation -->
           <nav class="bottom-nav">
             <button data-target="rates">📊</button>
             <button data-target="macro">📈</button>
@@ -117,6 +110,54 @@
     </section>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Embedded Script -->
+  <script>
+    const qs = s => document.querySelector(s);
+    const qsa = s => document.querySelectorAll(s);
+
+    // Onboarding Modal
+    document.getElementById('startBtn').addEventListener('click', () => {
+      document.getElementById('onboarding').style.display = 'none';
+      document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
+      fetchRates();
+    });
+
+    // Drawer Toggle
+    function toggleDrawer() {
+      qs('#drawer').classList.toggle('show');
+      qs('#overlay').classList.toggle('show');
+    }
+    qs('#menuBtn').addEventListener('click', toggleDrawer);
+    qs('#overlay').addEventListener('click', toggleDrawer);
+
+    // Section Navigation
+    function navigate(e) {
+      const id = e.currentTarget.dataset.target;
+      const el = qs(`#${id}`);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (qs('#drawer').classList.contains('show')) toggleDrawer();
+    }
+    qsa('[data-target]').forEach(btn => btn.addEventListener('click', navigate));
+
+    // Launch Button Outside
+    qs('#launchDemoBtn').addEventListener('click', () => {
+      qs('#app').scrollIntoView({ behavior: 'smooth' });
+      fetchRates();
+    });
+
+    // FX Rate Fetch
+    function fetchRates() {
+      fetch('https://api.exchangerate.host/latest?base=USD')
+        .then(r => r.json()).then(d => {
+          qs('#eurusdVal').textContent = (1 / d.rates.EUR).toFixed(4);
+          qs('#usdjpyVal').textContent = d.rates.JPY.toFixed(2);
+          qs('#gbpusdVal').textContent = (1 / d.rates.GBP).toFixed(4);
+        }).catch(() => {
+          qs('#eurusdVal').textContent = '1.0843';
+          qs('#usdjpyVal').textContent = '142.89';
+          qs('#gbpusdVal').textContent = '1.2711';
+        });
+    }
+  </script>
 </body>
 </html>
