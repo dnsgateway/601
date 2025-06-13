@@ -1,45 +1,48 @@
-window.onload = function () {
-  document.getElementById('onboarding').style.display = 'flex';
-};
+/* ── helpers ─────────────────────────────────────────────── */
+const qs = s => document.querySelector(s);
+const qsa = s => document.querySelectorAll(s);
 
-function closeModal() {
-  document.getElementById('onboarding').style.display = 'none';
-}
-
-document.getElementById("launchDemoBtn").addEventListener("click", () => {
-  document.getElementById("demoApp").scrollIntoView({ behavior: "smooth" });
+/* ── onboarding modal ───────────────────────────────────── */
+window.addEventListener('load', () => qs('#onboarding').hidden = false);
+qs('#startBtn').addEventListener('click', () => {
+  qs('#onboarding').hidden = true;
   fetchRates();
 });
 
-function navigate(view) {
-  const messages = {
-    rates: "📊 Displaying live Forex rates...",
-    macro: "📈 Displaying macroeconomic metrics...",
-    ai: "🤖 AI trade insight generated...",
-    settings: "⚙️ Opening user settings..."
-  };
-  alert(messages[view]);
-  toggleMenu(); // close menu if open
+/* ── drawer toggle ──────────────────────────────────────── */
+function toggleDrawer(){
+  qs('#drawer').classList.toggle('show');
+  qs('#overlay').classList.toggle('show');
 }
+qs('#menuBtn').addEventListener('click', toggleDrawer);
+qs('#overlay').addEventListener('click', toggleDrawer);
 
-function fetchRates() {
+/* ── navigation buttons (drawer & bottom) ───────────────── */
+function navigate(e){
+  const id = e.currentTarget.dataset.target;
+  const el = qs(`#${id}`);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  if(qs('#drawer').classList.contains('show')) toggleDrawer();
+}
+qsa('[data-target]').forEach(btn => btn.addEventListener('click', navigate));
+
+/* ── launch-demo button outside phone ───────────────────── */
+qs('#launchDemoBtn').addEventListener('click', ()=>{
+  qs('#app').scrollIntoView({behavior:'smooth'});
+  fetchRates();
+});
+
+/* ── live FX data (with graceful fallback) ──────────────── */
+function fetchRates(){
   fetch('https://api.exchangerate.host/latest?base=USD')
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("eurusd").textContent = (1 / data.rates.EUR).toFixed(4);
-      document.getElementById("usdjpy").textContent = data.rates.JPY.toFixed(2);
-      document.getElementById("gbpusd").textContent = (1 / data.rates.GBP).toFixed(4);
+    .then(r=>r.json()).then(d=>{
+      qs('#eurusdVal').textContent = (1 / d.rates.EUR).toFixed(4);
+      qs('#usdjpyVal').textContent = d.rates.JPY.toFixed(2);
+      qs('#gbpusdVal').textContent = (1 / d.rates.GBP).toFixed(4);
     })
-    .catch(() => {
-      document.getElementById("eurusd").textContent = "1.0843";
-      document.getElementById("usdjpy").textContent = "142.89";
-      document.getElementById("gbpusd").textContent = "1.2711";
+    .catch(()=>{
+      qs('#eurusdVal').textContent = '1.0843';
+      qs('#usdjpyVal').textContent = '142.89';
+      qs('#gbpusdVal').textContent = '1.2711';
     });
 }
-
-// Toggle menu
-function toggleMenu() {
-  document.getElementById("sideMenu").classList.toggle("show");
-  document.getElementById("overlay").classList.toggle("show");
-}
-document.getElementById("menuBtn").addEventListener("click", toggleMenu);
