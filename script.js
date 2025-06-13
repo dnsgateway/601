@@ -1,14 +1,4 @@
-// Show modal on load
-window.addEventListener('load', () => {
-  document.getElementById('onboarding').style.display = 'flex';
-});
 
-// Close modal and scroll to app
-document.getElementById('startBtn').addEventListener('click', () => {
-  document.getElementById('onboarding').style.display = 'none';
-  document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
-  fetchRates(); // activate live data
-});
 /* ── helpers ─────────────────────────────────────────────── */
 const qs = s => document.querySelector(s);
 const qsa = s => document.querySelectorAll(s);
