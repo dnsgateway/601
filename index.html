@@ -9,16 +9,17 @@
 <body>
 
   <!-- Onboarding Modal -->
-  <div id="onboarding" class="modal" style="display: flex;">
+  <div id="onboarding" class="modal" style="display:flex">
     <div class="modal-content">
       <h2>Welcome to Forex Simulator</h2>
-      <p>This app helps you trade smarter with real-time insights, macroeconomic events and AI-powered strategy suggestions.</p>
+      <p>This app helps you trade smarter with real-time insights, macro-economic
+         events and AI-powered strategy suggestions.</p>
       <button id="startBtn">Start Demo</button>
     </div>
   </div>
 
   <div class="landing-page">
-    <!-- Info Panel -->
+    <!-- Marketing panel -->
     <section class="info-panel">
       <div class="logo">A</div>
       <h1>Forex Simulator</h1>
@@ -31,7 +32,7 @@
       <button id="launchDemoBtn">Launch Interactive Demo</button>
     </section>
 
-    <!-- iPhone Mockup -->
+    <!-- iPhone-13 mock-up -->
     <section class="mockup-panel">
       <div class="iphone-shell">
         <div class="notch"></div>
@@ -58,28 +59,26 @@
           <!-- Hamburger -->
           <button id="menuBtn" class="hamburger"><span></span><span></span><span></span></button>
 
-          <!-- Main App Area -->
+          <!-- Main content -->
           <main class="content">
             <header class="hero">
               <h2>Forex Options<br>AI Dashboard</h2>
-              <p class="subtitle">Track key metrics & real-time<br>AI-driven trade strategies</p>
+              <p class="subtitle">Track key metrics &amp; real-time<br>AI-driven trade strategies</p>
             </header>
 
+            <!-- FX-rate cards -->
             <section id="rates" class="rates-grid">
-              <div class="rate-card">
-                <h3>EUR/USD</h3>
-                <p class="rate-line">Rate: <span id="eurusdVal">--</span></p>
-              </div>
-              <div class="rate-card">
-                <h3>USD/JPY</h3>
-                <p class="rate-line red">Rate: <span id="usdjpyVal">--</span></p>
-              </div>
-              <div class="rate-card wide">
-                <h3>GBP/USD</h3>
-                <p class="rate-line green">Rate: <span id="gbpusdVal">--</span></p>
-              </div>
+              <div class="rate-card"><h3>EUR/USD</h3><p class="rate-line">
+                Rate: <span id="eurusdVal">--</span></p></div>
+
+              <div class="rate-card"><h3>USD/JPY</h3><p class="rate-line red">
+                Rate: <span id="usdjpyVal">--</span></p></div>
+
+              <div class="rate-card wide"><h3>GBP/USD</h3><p class="rate-line green">
+                Rate: <span id="gbpusdVal">--</span></p></div>
             </section>
 
+            <!-- Macro table -->
             <section id="macro" class="macro">
               <h4>Macro Events &amp; Metrics</h4>
               <table>
@@ -92,82 +91,101 @@
               </table>
             </section>
 
+            <!-- Placeholder panels -->
             <section id="ai" class="placeholder"><h4>AI Strategy Assistant</h4></section>
             <section id="custom" class="placeholder"><h4>Custom Interface</h4></section>
           </main>
 
-          <!-- Bottom Nav (horizontal icons) -->
+          <!-- Bottom nav (horizontal icons) -->
           <nav class="bottom-nav">
-            <button data-target="rates">📊</button>
-            <button data-target="macro">📈</button>
-            <button data-target="ai">🤖</button>
+            <button data-target="rates" class="nav-btn active">📊</button>
+            <button data-target="macro" class="nav-btn">📈</button>
+            <button data-target="ai" class="nav-btn">🤖</button>
           </nav>
         </div>
       </div>
     </section>
   </div>
 
-  <!-- Script -->
+  <!-- JS Logic -->
   <script>
-    const qs = s => document.querySelector(s);
+    /* ---------- helpers ---------- */
+    const qs  = s => document.querySelector(s);
     const qsa = s => document.querySelectorAll(s);
 
-    // Onboarding Modal
-    window.addEventListener('load', () => {
-      document.getElementById('onboarding').style.display = 'flex';
+    const drawer   = qs('#drawer');
+    const overlay  = qs('#overlay');
+    const navBtns  = qsa('.bottom-nav .nav-btn');
+
+    /* ---------- onboarding modal ---------- */
+    window.addEventListener('load', () => qs('#onboarding').style.display = 'flex');
+
+    qs('#startBtn').addEventListener('click', () => {
+      qs('#onboarding').style.display = 'none';
+      launchDemo();                      // reuse same handler
     });
 
-    document.getElementById('startBtn').addEventListener('click', () => {
-      document.getElementById('onboarding').style.display = 'none';
-      document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
+    /* ---------- Launch Demo (outside) ---------- */
+    qs('#launchDemoBtn').addEventListener('click', launchDemo);
+
+    function launchDemo() {
+      qs('#app').scrollIntoView({ behavior:'smooth' });
       fetchRates();
-      openDrawer();
-    });
 
-    // Launch Demo Button
-    document.getElementById('launchDemoBtn').addEventListener('click', () => {
-      document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
-      fetchRates();
-      openDrawer();
-    });
+      /* toggle the drawer: open if closed, close if open */
+      toggleDrawer();
+    }
 
-    // Drawer Toggle
-    document.getElementById('menuBtn').addEventListener('click', toggleDrawer);
-    document.getElementById('overlay').addEventListener('click', toggleDrawer);
+    /* ---------- drawer controls ---------- */
+    qs('#menuBtn').addEventListener('click', toggleDrawer);
+    overlay.addEventListener('click', toggleDrawer);
 
     function toggleDrawer() {
-      document.getElementById('drawer').classList.toggle('show');
-      document.getElementById('overlay').classList.toggle('show');
+      drawer.classList.toggle('show');
+      overlay.classList.toggle('show');
     }
 
-    function openDrawer() {
-      document.getElementById('drawer').classList.add('show');
-      document.getElementById('overlay').classList.add('show');
-    }
-
-    // Navigation Buttons (Drawer & Bottom Nav)
-    function navigate(e) {
-      const id = e.currentTarget.dataset.target;
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-      // Close drawer if open
-      if (document.getElementById('drawer').classList.contains('show')) {
-        toggleDrawer();
-      }
-    }
-
-    // Attach navigate to all nav buttons
+    /* ---------- navigation (drawer & bottom) ---------- */
     qsa('[data-target]').forEach(btn => btn.addEventListener('click', navigate));
 
-    // Fetch live FX rates
+    function navigate(e) {
+      const id = e.currentTarget.dataset.target;
+
+      // scroll to section
+      const section = document.getElementById(id);
+      if (section) section.scrollIntoView({ behavior:'smooth', block:'start' });
+
+      // message popup
+      const messages = {
+        rates : '📊 Displaying live Forex rates',
+        macro : '📈 Showing macro-economic metrics',
+        ai    : '🤖 Launching AI strategy assistant',
+        custom: '⚙️ Opening custom interface'
+      };
+      alert(messages[id] || 'Loading…');
+
+      // highlight active bottom icon
+      setActiveIcon(id);
+
+      // close drawer if open
+      if (drawer.classList.contains('show')) toggleDrawer();
+    }
+
+    function setActiveIcon(id) {
+      navBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === id);
+      });
+    }
+
+    /* ---------- live FX rates ---------- */
     function fetchRates() {
       fetch('https://api.exchangerate.host/latest?base=USD')
         .then(r => r.json()).then(d => {
           qs('#eurusdVal').textContent = (1 / d.rates.EUR).toFixed(4);
-          qs('#usdjpyVal').textContent = d.rates.JPY.toFixed(2);
+          qs('#usdjpyVal').textContent =  d.rates.JPY.toFixed(2);
           qs('#gbpusdVal').textContent = (1 / d.rates.GBP).toFixed(4);
-        }).catch(() => {
+        })
+        .catch(() => {                 // offline fallback
           qs('#eurusdVal').textContent = '1.0843';
           qs('#usdjpyVal').textContent = '142.89';
           qs('#gbpusdVal').textContent = '1.2711';
