@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -18,7 +18,7 @@
   </div>
 
   <div class="landing-page">
-    <!-- Info Section -->
+    <!-- Info Panel -->
     <section class="info-panel">
       <div class="logo">A</div>
       <h1>Forex Simulator</h1>
@@ -31,13 +31,13 @@
       <button id="launchDemoBtn">Launch Interactive Demo</button>
     </section>
 
-    <!-- iPhone Mockup Panel -->
+    <!-- iPhone Mockup -->
     <section class="mockup-panel">
       <div class="iphone-shell">
         <div class="notch"></div>
 
         <div class="screen" id="app">
-          <!-- Side Drawer -->
+          <!-- Drawer -->
           <aside id="drawer" class="drawer">
             <div class="profile-block">
               <div class="avatar">👤</div>
@@ -55,10 +55,10 @@
           </aside>
           <div id="overlay" class="overlay"></div>
 
-          <!-- Hamburger Button -->
+          <!-- Hamburger -->
           <button id="menuBtn" class="hamburger"><span></span><span></span><span></span></button>
 
-          <!-- Main Content Area -->
+          <!-- Main App Area -->
           <main class="content">
             <header class="hero">
               <h2>Forex Options<br>AI Dashboard</h2>
@@ -96,7 +96,7 @@
             <section id="custom" class="placeholder"><h4>Custom Interface</h4></section>
           </main>
 
-          <!-- Bottom Navigation -->
+          <!-- Bottom Nav (horizontal icons) -->
           <nav class="bottom-nav">
             <button data-target="rates">📊</button>
             <button data-target="macro">📈</button>
@@ -107,17 +107,16 @@
     </section>
   </div>
 
-  <!-- Script Logic -->
+  <!-- Script -->
   <script>
     const qs = s => document.querySelector(s);
     const qsa = s => document.querySelectorAll(s);
 
-    // Show onboarding modal on page load
+    // Onboarding Modal
     window.addEventListener('load', () => {
       document.getElementById('onboarding').style.display = 'flex';
     });
 
-    // Close onboarding modal and launch demo
     document.getElementById('startBtn').addEventListener('click', () => {
       document.getElementById('onboarding').style.display = 'none';
       document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
@@ -125,14 +124,14 @@
       openDrawer();
     });
 
-    // Launch Demo button outside phone
+    // Launch Demo Button
     document.getElementById('launchDemoBtn').addEventListener('click', () => {
       document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
       fetchRates();
       openDrawer();
     });
 
-    // Hamburger toggle
+    // Drawer Toggle
     document.getElementById('menuBtn').addEventListener('click', toggleDrawer);
     document.getElementById('overlay').addEventListener('click', toggleDrawer);
 
@@ -146,16 +145,22 @@
       document.getElementById('overlay').classList.add('show');
     }
 
-    // Navigation buttons (drawer & bottom)
+    // Navigation Buttons (Drawer & Bottom Nav)
     function navigate(e) {
       const id = e.currentTarget.dataset.target;
       const el = document.getElementById(id);
       if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      if (document.getElementById('drawer').classList.contains('show')) toggleDrawer();
+
+      // Close drawer if open
+      if (document.getElementById('drawer').classList.contains('show')) {
+        toggleDrawer();
+      }
     }
+
+    // Attach navigate to all nav buttons
     qsa('[data-target]').forEach(btn => btn.addEventListener('click', navigate));
 
-    // Live Forex Rate Fetch
+    // Fetch live FX rates
     function fetchRates() {
       fetch('https://api.exchangerate.host/latest?base=USD')
         .then(r => r.json()).then(d => {
