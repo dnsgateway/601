@@ -116,7 +116,11 @@ button#launchDemoBtn,.modal-content button{
 .bottom-nav button{
   background:none;border:none;font-size:1.4rem;color:var(--blue);cursor:pointer;
 }
-
+/* highlight the active bottom icon */
+.bottom-nav .nav-btn.active{
+  background: var(--blue);
+  color: #00223e;
+}
 /* ------------ modal --------------- */
 .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.8);z-index:2000;}
 .modal-content{background:var(--panel);padding:2rem;border-radius:16px;max-width:380px;text-align:center;}
