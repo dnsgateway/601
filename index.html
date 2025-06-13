@@ -8,16 +8,17 @@
 </head>
 <body>
 
-  <!-- Onboarding Modal -->
-  <div id="onboarding" class="modal">
+  <!-- ─── Onboarding modal ───────────────────────────────────────────── -->
+  <div id="onboarding" class="modal" hidden>
     <div class="modal-content">
       <h2>Welcome to Forex Simulator</h2>
-      <p>This app helps you trade smarter with real-time insights, macroeconomic events, and AI-powered strategy suggestions.</p>
-      <button onclick="closeModal()">Start Demo</button>
+      <p>This app helps you trade smarter with real-time insights, macro-economic events and AI-powered strategy suggestions.</p>
+      <button id="startBtn">Start Demo</button>
     </div>
   </div>
 
   <div class="landing-page">
+    <!-- Marketing / hero column -------------------------------------- -->
     <section class="info-panel">
       <div class="logo">A</div>
       <h1>Forex Simulator</h1>
@@ -30,69 +31,86 @@
       <button id="launchDemoBtn">Launch Interactive Demo</button>
     </section>
 
+    <!-- iPhone-13 mock-up -------------------------------------------- -->
     <section class="mockup-panel">
-      <div class="phone-mockup">
+      <div class="iphone-shell">
         <div class="notch"></div>
 
-        <div class="screen" id="demoApp">
-          <button id="menuBtn" class="hamburger"><span></span><span></span><span></span></button>
+        <!-- App screen -->
+        <div class="screen" id="app">
 
-          <aside id="sideMenu" class="side-menu">
-            <div class="profile-card">
+          <!-- Side-menu (hidden by default) -->
+          <aside id="drawer" class="drawer">
+            <div class="profile-block">
               <div class="avatar">👤</div>
-              <div class="profile-info">
+              <div class="details">
                 <h3>Trader Profile</h3>
                 <p>user@ai.forex</p>
               </div>
             </div>
-            <nav>
-              <button onclick="navigate('rates')">📊 Forex Rates</button>
-              <button onclick="navigate('macro')">📈 Macro Events</button>
-              <button onclick="navigate('ai')">🤖 AI Assistant</button>
-              <button onclick="navigate('settings')">⚙️ Custom Interface</button>
+
+            <nav class="drawer-nav">
+              <button data-target="rates"><span class="icon">▮▮</span>Forex Rates</button>
+              <button data-target="macro"><span class="icon">↗</span>Macro Events</button>
+              <button data-target="ai"><span class="icon">⚡</span>AI Assistant</button>
+              <button data-target="custom"><span class="icon">✱</span>Custom Interface</button>
             </nav>
           </aside>
+          <div id="overlay" class="overlay"></div>
 
-          <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+          <!-- Hamburger -->
+          <button id="menuBtn" class="hamburger"><span></span><span></span><span></span></button>
 
-          <div class="dashboard">
-            <h2>Forex Options<br />AI Dashboard</h2>
-            <p class="subtitle">Track key metrics & real-time AI-driven trade strategies</p>
+          <!-- Scrollable main content -->
+          <main class="content">
 
-            <div class="card eur">
-              <h3>EUR/USD</h3>
-              <p>Rate: <span id="eurusd">--</span></p>
-            </div>
-            <div class="card jpy">
-              <h3>USD/JPY</h3>
-              <p>Rate: <span id="usdjpy">--</span></p>
-            </div>
-            <div class="card gbp">
-              <h3>GBP/USD</h3>
-              <p>Rate: <span id="gbpusd">--</span></p>
-            </div>
+            <header class="hero">
+              <h2>Forex Options<br>AI Dashboard</h2>
+              <p class="subtitle">Track key metrics &amp; real-time<br>AI-driven trade strategies</p>
+            </header>
 
-            <div class="macro-table">
-              <h4>Macro Events & Metrics</h4>
+            <!-- Rate Cards -->
+            <section id="rates" class="rates-grid">
+              <div class="rate-card">
+                <h3>EUR/USD</h3>
+                <p class="rate-line">Rate: <span id="eurusdVal">--</span></p>
+              </div>
+
+              <div class="rate-card">
+                <h3>USD/JPY</h3>
+                <p class="rate-line red">Rate: <span id="usdjpyVal">--</span></p>
+              </div>
+
+              <div class="rate-card wide">
+                <h3>GBP/USD</h3>
+                <p class="rate-line green">Rate: <span id="gbpusdVal">--</span></p>
+              </div>
+            </section>
+
+            <!-- Macro table -->
+            <section id="macro" class="macro">
+              <h4>Macro Events &amp; Metrics</h4>
               <table>
-                <thead>
-                  <tr>
-                    <th>Pair</th><th>Volatility</th><th>Rate Diff</th><th>Event</th>
-                  </tr>
-                </thead>
+                <thead><tr><th>Pair</th><th>Volatility</th><th>Rate Diff</th><th>Event</th></tr></thead>
                 <tbody>
-                  <tr><td>EUR/USD</td><td>8.2%</td><td>-0.75%</td><td>ECB Rate Decision</td></tr>
-                  <tr><td>USD/JPY</td><td>7.8%</td><td>+2.1%</td><td>BoJ Press Conference</td></tr>
-                  <tr><td>GBP/USD</td><td>5.9%</td><td>-0.25%</td><td>UK Inflation Data</td></tr>
+                  <tr><td>EUR/USD</td><td>8.2%</td><td class="down">-0.75%</td><td>ECB Rate Decision</td></tr>
+                  <tr><td>USD/JPY</td><td>7.8%</td><td class="up">+2.1%</td><td>BoJ Press Conference</td></tr>
+                  <tr><td>GBP/USD</td><td>5.9%</td><td class="down">-0.25%</td><td>UK Inflation Data</td></tr>
                 </tbody>
               </table>
-            </div>
-          </div>
+            </section>
 
+            <!-- Placeholder panels (navigation targets) -->
+            <section id="ai" class="placeholder"><h4>AI Strategy Assistant</h4></section>
+            <section id="custom" class="placeholder"><h4>Custom Interface</h4></section>
+
+          </main>
+
+          <!-- Bottom nav -->
           <nav class="bottom-nav">
-            <button onclick="navigate('rates')">📊</button>
-            <button onclick="navigate('ai')">🤖</button>
-            <button onclick="navigate('settings')">⚙️</button>
+            <button data-target="rates">📊</button>
+            <button data-target="macro">📈</button>
+            <button data-target="ai">🤖</button>
           </nav>
         </div>
       </div>
