@@ -3,55 +3,130 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Forex Trade Simulator </title>
+  <title>Forex Trade Simulator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <!-- Onboarding Modal -->
   <div id="onboarding" class="modal">
     <div class="modal-content">
       <h2>Welcome to Forex Simulator</h2>
-      <p>This app helps you trade smarter with real-time insights, macroeconomic events, and AI-powered strategy suggestions.</p>
+      <p>This app helps you trade smarter with real-time insights, macro-economic events, and AI-powered strategy suggestions.</p>
       <button onclick="closeModal()">Start Demo</button>
     </div>
   </div>
 
   <div class="landing-page">
-    <!-- Information Section -->
+    <!-- Information / Marketing panel -->
     <section class="info-panel">
       <div class="logo">A</div>
-      <h1>Forex Simulator </h1>
+      <h1>Forex Simulator</h1>
       <p class="tagline">Trade smarter with AI-driven insights</p>
+
       <ul class="features">
         <li>📊 Real-Time Forex Rates</li>
         <li>🤖 AI Strategy Suggestions</li>
         <li>📅 Macro Event Tracking</li>
       </ul>
+
       <button id="launchDemoBtn">Launch Interactive Demo</button>
     </section>
 
-    <!-- Android Phone Mockup -->
+    <!-- iPhone-style phone mock-up -->
     <section class="mockup-panel">
       <div class="phone-mockup">
-        <div id="demoApp" class="mockup">
-          <div id="screen" class="screen">
-            <div class="rate">EUR/USD <span id="eurusd">--</span></div>
-            <div class="rate red">USD/JPY <span id="usdjpy">--</span></div>
-            <div class="rate green">GBP/USD <span id="gbpusd">--</span></div>
-            <h3>AI Insight</h3>
-            <div class="insight">📈 Long GBP/USD</div>
-            <div class="insight red">📉 Hedge EUR/USD Volatility</div>
+        <!-- Front speaker & camera notch -->
+        <div class="notch"></div>
+
+        <!-- Screen begins -->
+        <div id="demoApp" class="screen">
+
+          <!-- Status bar -->
+          <div class="status-bar">
+            <span class="time">9:41</span>
+            <div class="sys-icons">
+              <span class="cell"></span>
+              <span class="wifi"></span>
+              <span class="battery"></span>
+            </div>
           </div>
+
+          <!-- Heading -->
+          <header class="hero">
+            <h2>Forex Options AI Dashboard</h2>
+            <p class="subtitle">Track key metrics &amp; real-time AI-driven trade strategies</p>
+          </header>
+
+          <!-- FX-rate cards -->
+          <div class="rates-grid">
+            <div class="rate-card" id="eurusdCard">
+              <h3>EUR/USD</h3>
+              <p class="rate-val" id="eurusd">1,0843</p>
+              <p class="rate-chg up" id="eurusdChg">+0.12%</p>
+            </div>
+
+            <div class="rate-card" id="usdjpyCard">
+              <h3>USD/JPY</h3>
+              <p class="rate-val" id="usdjpy">142.89</p>
+              <p class="rate-chg down" id="usdjpyChg">-0.21%</p>
+            </div>
+
+            <div class="rate-card wide" id="gbpusdCard">
+              <h3>GBP/USD</h3>
+              <p class="rate-val" id="gbpusd">1,2711</p>
+              <p class="rate-chg up" id="gbpusdChg">+0.18%</p>
+            </div>
+          </div>
+
+          <!-- Macro table -->
+          <section class="macro">
+            <h4>Macro Events &amp; Metrics</h4>
+            <table class="macro-table">
+              <thead>
+                <tr>
+                  <th>Pair</th>
+                  <th>Volatility</th>
+                  <th>Rate Diff</th>
+                  <th>Event</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>EUR/USD</td>
+                  <td>6,2%</td>
+                  <td class="down">-0,75%</td>
+                  <td>ECB Rate Decision</td>
+                </tr>
+                <tr>
+                  <td>USD/JPY</td>
+                  <td>7,8%</td>
+                  <td class="up">+2,1%</td>
+                  <td>BoJ Press Conference</td>
+                </tr>
+                <tr>
+                  <td>GBP/USD</td>
+                  <td>5,9%</td>
+                  <td class="down">-0,25%</td>
+                  <td>UK Inflation Data</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- Bottom nav (kept from original) -->
           <nav class="bottom-nav">
             <button onclick="navigate('rates')">📊</button>
             <button onclick="navigate('ai')">🤖</button>
             <button onclick="navigate('settings')">⚙️</button>
           </nav>
         </div>
+        <!-- Screen ends -->
       </div>
     </section>
   </div>
 
+  <!-- existing JS still works -->
   <script src="script.js"></script>
 </body>
 </html>
