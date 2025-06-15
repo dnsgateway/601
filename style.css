@@ -382,6 +382,45 @@ button#launchDemoBtn,
   flex: 1 1 100%;
 }
 
+/* --- donation form row --- */
+.donation-form{
+  display:flex;
+  gap:.6rem;
+  flex-wrap:wrap;                    /* will wrap gracefully on narrow screens */
+  align-items:center;
+  width:100%;
+}
+
+/* inputs */
+.donation-form input[type="text"],
+.donation-form input[type="email"]{
+  flex:1 1 140px;                    /* equal width, shrinks down to 140 px */
+  min-width:120px;
+  padding:.55rem .8rem;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:var(--bg);
+  color:var(--txt);
+  font-size:.85rem;
+}
+.donation-form input::placeholder{
+  color:var(--sub);
+  opacity:.8;
+}
+
+/* keep the PayPal button last & visually balanced */
+.paypal-btn{
+  flex:0 0 auto;                     /* never grows */
+  white-space:nowrap;                /* text won’t wrap */
+  background:#ffc439;
+  color:#111;
+  border:none;
+  border-radius:6px;
+  padding:.65rem 1.1rem;
+  font-weight:600;
+  cursor:pointer;
+}
+
 .donation-content p {
   flex: 1;
   margin: 0;
