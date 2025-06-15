@@ -347,36 +347,72 @@
       </section>
     </div>
 
-    <!-- Donation bar at top -->
-<div id="donationCard" class="donation-card">
-  <div class="donation-content">
-    <button id="closeDonation" class="close-btn" aria-label="Close">&times;</button>
-    <h3>Support Forex Simulator</h3>
-    <p>Enjoying the app? A small $2.99 donation keeps the updates coming. 🙏</p>
-    <form class="donation-form"
-      action="https://www.paypal.com/donate"
-      method="post"
-      target="_blank">
-  <!-- user-supplied fields -->
-  <input  type="text"   name="first_name" placeholder="First name" required />
-  <input  type="text"   name="last_name"  placeholder="Last name"  required />
-  <input  type="email"  name="email"      placeholder="Email"      required />
-
-  <!-- hidden PayPal params -->
-  <input type="hidden" name="business"      value="YOUR_PAYPAL_ID" />
-  <input type="hidden" name="currency_code" value="USD"           />
-  <input type="hidden" name="amount"        value="2.99"          />
-
-  <!-- PayPal button (stays last in the row) -->
-  <button type="submit" class="paypal-btn">
-    Donate&nbsp;$2.99&nbsp;with&nbsp;PayPal
-  </button>
-</form>
+    <!-- ─────── Donation Banner ─────── -->
+  <div id="donationCard" class="donation-card">
+    <div class="donation-content">
+      <button id="closeDonation" class="close-btn" aria-label="Close">&times;</button>
+      <h3>Support Forex Simulator</h3>
+      <p>Enjoying the app? A small $2.99 donation keeps the updates coming. 🙏</p>
+      <form id="donateForm" class="donation-form"
+            action="https://www.paypal.com/donate"
+            method="post"
+            target="_blank">
+        <input type="text" name="first_name" placeholder="First name" required />
+        <input type="text" name="last_name" placeholder="Last name" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="hidden" name="business" value="YOUR_PAYPAL_ID" />
+        <input type="hidden" name="currency_code" value="USD" />
+        <input type="hidden" name="amount" value="2.99" />
+        <input type="hidden" name="return" value="https://yourdomain.com/?donation=success" />
+        <button type="submit" class="paypal-btn">Donate $2.99 with PayPal</button>
+      </form>
+    </div>
   </div>
-</div>
+
+  <!-- ─────── Thank-you Message ─────── -->
+  <div id="donationThanks" class="donation-thanks">
+    ✅ Thanks for your support! You’ll get an e-mail with your access link in a few minutes.
+  </div>
 
     <!-- ──────── JavaScript logic ──────── -->
     <script>
+      
+      function setCookie(name, val, days) {
+      const d = new Date();
+      d.setTime(d.getTime() + days * 864e5);
+      document.cookie = name + "=" + val + "; path=/; SameSite=Lax; expires=" + d.toUTCString();
+    }
+
+    function getCookie(name) {
+      return document.cookie.split("; ").find(c => c.startsWith(name + "="))?.split("=")[1];
+    }
+
+    function eraseCookie(name) {
+      document.cookie = name + "=; Max-Age=-1; path=/;";
+    }
+
+    // Track that user clicked donate
+    document.querySelector("#donateForm")?.addEventListener("submit", () => {
+      setCookie("donationPending", "1", 1);
+    });
+
+    // On page load: verify redirect from PayPal
+    window.addEventListener("DOMContentLoaded", () => {
+      const ok = new URLSearchParams(location.search).get("donation") === "success";
+      if (ok && getCookie("donationPending") === "1") {
+        eraseCookie("donationPending");
+        setCookie("donationDone", "1", 7);
+        document.querySelector("#donationCard")?.remove();
+        document.querySelector("#donationThanks")?.classList.add("show");
+      }
+    });
+
+    // Allow closing the banner manually
+    document.querySelector("#closeDonation")?.addEventListener("click", () => {
+      document.querySelector("#donationCard")?.remove();
+    });
+
+      
       /* ---------- helpers ---------- */
       const qs = (s) => document.querySelector(s);
       const qsa = (s) => document.querySelectorAll(s);
