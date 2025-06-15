@@ -340,54 +340,70 @@ button#launchDemoBtn,
   max-width: 380px;
   text-align: center;
 }
-
-/* --- donation pop-up overlay & card --- */
+/* --- donation pop-up banner at the top --- */
 .donation-card {
   position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
   z-index: 3000;
-  opacity: 0; /* start hidden */
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: all 0.35s ease;
   pointer-events: none;
-  transition: 0.25s;
 }
+
 .donation-card.show {
   opacity: 1;
+  transform: translateY(0);
   pointer-events: auto;
 }
 
 .donation-content {
-  position: relative;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  width: 90%;
-  max-width: 340px;
-  padding: 2rem;
-  text-align: center;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  color: var(--txt);
+  font-size: 0.9rem;
+}
+
+.donation-content h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--green);
+  flex: 1 1 100%;
+}
+
+.donation-content p {
+  flex: 1;
+  margin: 0;
+  color: var(--sub);
 }
 
 .paypal-btn {
-  background: #ffc439; /* PayPal yellow */
+  background: #ffc439;
   color: #111;
   border: none;
   border-radius: 6px;
-  padding: 0.7rem 1.4rem;
-  font-size: 1rem;
-  margin-top: 1rem;
+  padding: 0.6rem 1.1rem;
+  font-weight: 600;
   cursor: pointer;
 }
 
 .close-btn {
-  position: absolute;
-  top: 12px;
-  right: 14px;
   background: none;
   border: none;
-  font-size: 1.4rem;
   color: var(--txt);
+  font-size: 1.2rem;
+  padding: 0.3rem 0.8rem;
   cursor: pointer;
+  align-self: start;
 }
