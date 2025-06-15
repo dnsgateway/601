@@ -353,12 +353,25 @@
     <button id="closeDonation" class="close-btn" aria-label="Close">&times;</button>
     <h3>Support Forex Simulator</h3>
     <p>Enjoying the app? A small $2.99 donation keeps the updates coming. 🙏</p>
-    <form action="https://www.paypal.com/donate" method="post" target="_blank">
-      <input type="hidden" name="business" value="YOUR_PAYPAL_ID" />
-      <input type="hidden" name="currency_code" value="USD" />
-      <input type="hidden" name="amount" value="2.99" />
-      <button type="submit" class="paypal-btn">Donate $2.99 with PayPal</button>
-    </form>
+    <form class="donation-form"
+      action="https://www.paypal.com/donate"
+      method="post"
+      target="_blank">
+  <!-- user-supplied fields -->
+  <input  type="text"   name="first_name" placeholder="First name" required />
+  <input  type="text"   name="last_name"  placeholder="Last name"  required />
+  <input  type="email"  name="email"      placeholder="Email"      required />
+
+  <!-- hidden PayPal params -->
+  <input type="hidden" name="business"      value="YOUR_PAYPAL_ID" />
+  <input type="hidden" name="currency_code" value="USD"           />
+  <input type="hidden" name="amount"        value="2.99"          />
+
+  <!-- PayPal button (stays last in the row) -->
+  <button type="submit" class="paypal-btn">
+    Donate&nbsp;$2.99&nbsp;with&nbsp;PayPal
+  </button>
+</form>
   </div>
 </div>
 
