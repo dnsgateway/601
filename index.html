@@ -378,35 +378,36 @@
     <!-- ──────── JavaScript logic ──────── -->
     <script>
       
-      function setCookie(name, val, days) {
-      const d = new Date();
-      d.setTime(d.getTime() + days * 864e5);
-      document.cookie = name + "=" + val + "; path=/; SameSite=Lax; expires=" + d.toUTCString();
+      <script>
+  function setCookie(name, val, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + days * 864e5);
+    document.cookie = name + "=" + val + "; path=/; SameSite=Lax; expires=" + d.toUTCString();
+  }
+
+  function getCookie(name) {
+    return document.cookie.split("; ").find(c => c.startsWith(name + "="))?.split("=")[1];
+  }
+
+  function eraseCookie(name) {
+    document.cookie = name + "=; Max-Age=-1; path=/;";
+  }
+
+  // Mark donation intent before redirect
+  document.querySelector("#donateForm")?.addEventListener("submit", () => {
+    setCookie("donationPending", "1", 1);
+  });
+
+  // Handle PayPal redirect and show inline thank you
+  window.addEventListener("DOMContentLoaded", () => {
+    const ok = new URLSearchParams(location.search).get("donation") === "success";
+    if (ok && getCookie("donationPending") === "1") {
+      eraseCookie("donationPending");
+      setCookie("donationDone", "1", 7);
+      const message = document.querySelector("#donationThanks");
+      if (message) message.classList.add("show");
     }
-
-    function getCookie(name) {
-      return document.cookie.split("; ").find(c => c.startsWith(name + "="))?.split("=")[1];
-    }
-
-    function eraseCookie(name) {
-      document.cookie = name + "=; Max-Age=-1; path=/;";
-    }
-
-    // Track that user clicked donate
-    document.querySelector("#donateForm")?.addEventListener("submit", () => {
-      setCookie("donationPending", "1", 1);
-    });
-
-    // On page load: verify redirect from PayPal
-    window.addEventListener("DOMContentLoaded", () => {
-      const ok = new URLSearchParams(location.search).get("donation") === "success";
-      if (ok && getCookie("donationPending") === "1") {
-        eraseCookie("donationPending");
-        setCookie("donationDone", "1", 7);
-        document.querySelector("#donationCard")?.remove();
-        document.querySelector("#donationThanks")?.classList.add("show");
-      }
-    });
+  });
 
     // Allow closing the banner manually
     document.querySelector("#closeDonation")?.addEventListener("click", () => {
